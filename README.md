@@ -25,18 +25,19 @@ A Python application that generates Bitcoin private keys, public keys, and addre
 - ✅ Generate random entropy or use custom binary input
 
 ## Installation
-
-1. Clone or download this repository
-
-2. Create a virtual environment (recommended):
+Clone or download this repository
+```bash
+git clone github.com/your-username/Crypto-Project.git
+cd Crypto-Project
+```
+Create a virtual environment (recommended):
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate  # On Linux/Mac
 # or
 .venv\Scripts\activate  # On Windows
 ```
-
-3. Install dependencies:
+Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
