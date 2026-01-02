@@ -120,25 +120,25 @@ def bech32_encode(hrp, data):
     return hrp + '1' + ''.join([charset[d] for d in combined])
 
 
-def convertbits(data, frombits, tobits, pad=True):
+def convert_bits(data, from_bits, to_bits, pad=True):
     """Convert between bit groups"""
     acc = 0
     bits = 0
     ret = []
-    maxv = (1 << tobits) - 1
-    max_acc = (1 << (frombits + tobits - 1)) - 1
+    maxv = (1 << to_bits) - 1
+    max_acc = (1 << (from_bits + to_bits - 1)) - 1
     for value in data:
-        if value < 0 or (value >> frombits):
+        if value < 0 or (value >> from_bits):
             return None
-        acc = ((acc << frombits) | value) & max_acc
-        bits += frombits
-        while bits >= tobits:
-            bits -= tobits
+        acc = ((acc << from_bits) | value) & max_acc
+        bits += from_bits
+        while bits >= to_bits:
+            bits -= to_bits
             ret.append((acc >> bits) & maxv)
     if pad:
         if bits:
-            ret.append((acc << (tobits - bits)) & maxv)
-    elif bits >= frombits or ((acc << (tobits - bits)) & maxv):
+            ret.append((acc << (to_bits - bits)) & maxv)
+    elif bits >= from_bits or ((acc << (to_bits - bits)) & maxv):
         return None
     return ret
 
@@ -163,7 +163,7 @@ def public_key_to_bech32_address(public_key_hex: str, testnet: bool = False) -> 
     # Convert to 5-bit groups for Bech32
     # Witness version 0
     witness_version = 0
-    witness_program = convertbits(pubkey_hash, 8, 5)
+    witness_program = convert_bits(pubkey_hash, 8, 5)
     
     if witness_program is None:
         raise ValueError("Failed to convert bits for Bech32 encoding")
